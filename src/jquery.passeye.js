@@ -10,7 +10,7 @@
     'use strict';
 
     /**
-     * Enable Module System to support CommonJS, RequireJS.
+     * Enable Module System to support CommonJS.
      * courtesy: SO <http://stackoverflow.com/a/11890239/414749>
      */
     if (typeof define === 'function' && define.amd) {
