@@ -41,14 +41,12 @@
         return this.each(function () {
             var me = $(this),
                 parentEl = $(this).parent(),
-                passwordFieldAttrObj = {},
                 passeyeEl,
                 passeyeContainerEl,
-                plainTextEl,
                 fnShowPassword,
-                fnHidePassword,
-                hideFlag = true;
+                fnHidePassword;
 
+            // Passeye Element Object.
             passeyeEl = $('<span />', {
                             'class': config.passeyeCls,
                             'css': {
@@ -56,28 +54,15 @@
                             }
                         }).html(config.eyecon);
 
+            // Parent Container which keeps Password input box and Passeye.
             passeyeContainerEl = $('<span />', {
                                     'class': config.cls
                                 });
 
-            // Iterate over attributes of this Password field and collect all attributes.
-            $(this).each(function () {
-                $.each(this.attributes, function () {
-                    if (this.specified) {
-                        passwordFieldAttrObj[this.name] = this.value;
-                    }
-                });
-            });
-
-            passwordFieldAttrObj.type = 'text'; // Set type to text to construct textbox with similar attributes.
-
-            plainTextEl =   $("<input />", passwordFieldAttrObj);
-
-            /*** We now have the basic requirements ready to enable Passeye. ***/
             parentEl.append(passeyeContainerEl);    // Insert Parent Container.
             $(this).remove();                       // Remove original Password field.
             passeyeContainerEl.append(me);          // Put referenced Password field into container.
-            if (config.rtl) {                         // Add Passeye.
+            if (config.rtl) {                       // Add Passeye based on RTL settings.
                 me.before(passeyeEl);
             }
             else {
@@ -88,22 +73,8 @@
              * Method to toggle from Password field to plain-text field.
              */
             fnShowPassword = function () {
-                var passwordField = me,
-                    passwordText;
-
-                if (passwordField.val().length) {
-                    passwordText = passwordField.val();
-                    passwordField.remove();
-
-                    if (config.rtl) {
-                        $(this).after(plainTextEl);
-                    }
-                    else {
-                        $(this).before(plainTextEl);
-                    }
-
-                    plainTextEl.val(passwordText);
-                    hideFlag = false;
+                if (me.val().length) {
+                    me.attr('type', 'text');
                 }
             };
 
@@ -111,21 +82,8 @@
              * Method to toggle from plaing-text field to Password field.
              */
             fnHidePassword = function () {
-                if (!hideFlag) {
-                    if (plainTextEl.val().length) {
-                        var passwordText = plainTextEl.val();
-                        plainTextEl.remove();
-
-                        if (config.rtl) {
-                            $(this).after(me);
-                        }
-                        else {
-                            $(this).before(me);
-                        }
-
-                        me.val(passwordText);
-                        hideFlag = true;
-                    }
+                if (me.val().length) {
+                    me.attr('type', 'password');
                 }
             };
 
@@ -148,7 +106,7 @@
             /**
              * Attach keyup listener to toggle Passeye for password input.
              */
-            me.parent().on('keyup', 'input[type="password"]', function () {
+            me.on('keyup', function () {
                 if ($(this).val().length) {
                     passeyeEl.css('visibility', 'visible');
                 }
