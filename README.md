@@ -1,6 +1,6 @@
 # Passeye
 
-Passeye is a small jQuery Plugin (a little over a Kilobyte!) to show password reveal button beside password fields in your forms. It is inspired by Windows 8 password field where user gets small "Eye" icon beside password text-box to reveal password with a single click.
+Passeye is a small jQuery Plugin (less than a Kilobyte!) to show password reveal button beside password fields in your forms. It is inspired by Windows 8 password field where user gets small "Eye" icon beside password text-box to reveal password with a single click.
 
 It is AMD-ready plugin, and hence can be loaded as a module into your webapp via CommonJS-complaint module loader.
 
